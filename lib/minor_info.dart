@@ -54,7 +54,7 @@ class StudentMinorInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      onPressed: () => {print("take me")},
+      onPressed: () => Navigator.of(context).pushNamed('/major'),
       child: Container(
         child: Card(
           elevation: 8,

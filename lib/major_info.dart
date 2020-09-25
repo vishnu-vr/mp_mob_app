@@ -38,15 +38,104 @@ class DisplayInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        children: [
-          Text(
-            this.info["name"],
-            style: TextStyle(
-              fontSize: 20,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+        child: Column(
+          children: [
+            Text(
+              "Name",
+              style: TextStyle(
+                fontSize: 20,
+              ),
             ),
-          ),
-        ],
+            Text(
+              this.info["name"],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
+            ),
+            Divider(
+              color: Colors.grey[600],
+              height: 40,
+            ),
+            Row(
+              children: [
+                Text(
+                  "Mark : ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+                Text(
+                  this.info["mark"],
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 15),
+            Row(
+              children: [
+                Text(
+                  "Correct : ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+                Text(
+                  this.info["correct"],
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 15),
+            Row(
+              children: [
+                Text(
+                  "Wrong : ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+                Text(
+                  this.info["wrong"],
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 15),
+            Row(
+              children: [
+                Text(
+                  "NA : ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+                Text(
+                  this.info["na"],
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
