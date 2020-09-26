@@ -15,6 +15,7 @@ class MinorInfo extends StatefulWidget {
   var wrong = [];
   var na = [];
   var date = [];
+  var id = [];
 
   @override
   _MinorInfoState createState() => _MinorInfoState();
@@ -37,6 +38,7 @@ class _MinorInfoState extends State<MinorInfo> {
     var wrong = [];
     var na = [];
     var date = [];
+    var id = [];
 
     for (int i = 0; i < studentList.length; i++) {
       studentNames.add(studentList[i]["name"]);
@@ -45,6 +47,7 @@ class _MinorInfoState extends State<MinorInfo> {
       wrong.add(studentList[i]["wrong"]);
       na.add(studentList[i]["na"]);
       date.add(studentList[i]["date"]);
+      id.add(studentList[i]["id"]);
     }
     print(studentList);
 
@@ -55,6 +58,7 @@ class _MinorInfoState extends State<MinorInfo> {
       this.widget.wrong = wrong;
       this.widget.na = na;
       this.widget.date = date;
+      this.widget.id = id;
     });
   }
 
@@ -68,6 +72,7 @@ class _MinorInfoState extends State<MinorInfo> {
         this.widget.wrong[i],
         this.widget.na[i],
         this.widget.date[i],
+        this.widget.id[i],
         i + 1,
       ));
     }
@@ -112,10 +117,11 @@ class StudentMinorInfo extends StatelessWidget {
   final wrong;
   final na;
   final date;
+  final id;
   final int rank;
 
   StudentMinorInfo(this.studentName, this.studentMark, this.correct, this.wrong,
-      this.na, this.date, this.rank);
+      this.na, this.date, this.id, this.rank);
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +134,7 @@ class StudentMinorInfo extends StatelessWidget {
         "na": na,
         "date": date,
         "rank": rank,
+        "id": id,
       }),
       child: Container(
         child: Card(

@@ -21,3 +21,15 @@ Future<http.Response> getQuizData(String quizName) {
     }),
   );
 }
+
+Future<http.Response> delete(String id) {
+  return http.post(
+    'https://mathspartner.com/delete_user_result',
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'row_id': id,
+    }),
+  );
+}

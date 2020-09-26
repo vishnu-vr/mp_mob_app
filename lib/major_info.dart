@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mathspartner/api.dart' as api;
 
 // ignore: must_be_immutable
 class MajorInfo extends StatelessWidget {
@@ -185,6 +186,15 @@ class DisplayInfo extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: 20),
+            Divider(height: 30),
+            SizedBox(height: 20),
+            RaisedButton(
+              elevation: 5,
+              color: Colors.red,
+              onPressed: () => {api.delete(this.info["id"].toString())},
+              child: Icon(Icons.delete),
+            )
           ],
         ),
       ),
