@@ -1,23 +1,85 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:mathspartner/loading.dart';
+import 'package:mathspartner/api.dart' as api;
 
-class MinorInfo extends StatelessWidget {
-  final List studentNamesAndMarks = [
-    {"name": "Achuth M Menon", "mark": "90"},
-    {"name": "ramesh", "mark": "100"},
-    {"name": "achu", "mark": "60"},
-    {"name": "madhu", "mark": "88"},
-    {"name": "vishnu", "mark": "22"},
-    {"name": "suresh", "mark": "100"},
-    {"name": "manju", "mark": "99"},
-    {"name": "gayathri", "mark": "100"},
-  ];
+// ignore: must_be_immutable
+class MinorInfo extends StatefulWidget {
+  final String quizName;
+
+  MinorInfo(this.quizName);
+
+  var studentNames = [];
+  var studentMarks = [];
+  var correct = [];
+  var wrong = [];
+  var na = [];
+  var date = [];
+
+  @override
+  _MinorInfoState createState() => _MinorInfoState();
+}
+
+class _MinorInfoState extends State<MinorInfo> {
+  @override
+  void initState() {
+    super.initState();
+    getQuizData();
+  }
+
+  void getQuizData() async {
+    var res = await api.getQuizData(this.widget.quizName);
+    List studentList = jsonDecode(res.body);
+
+    var studentNames = [];
+    var studentMarks = [];
+    var correct = [];
+    var wrong = [];
+    var na = [];
+    var date = [];
+
+    for (int i = 0; i < studentList.length; i++) {
+      studentNames.add(studentList[i]["name"]);
+      studentMarks.add(studentList[i]["score"]);
+      correct.add(studentList[i]["correct"]);
+      wrong.add(studentList[i]["wrong"]);
+      na.add(studentList[i]["na"]);
+      date.add(studentList[i]["date"]);
+    }
+    print(studentList);
+
+    setState(() {
+      this.widget.studentNames = studentNames;
+      this.widget.studentMarks = studentMarks;
+      this.widget.correct = correct;
+      this.widget.wrong = wrong;
+      this.widget.na = na;
+      this.widget.date = date;
+    });
+  }
 
   List<Widget> _buildCards() {
     List<Widget> ret = [];
-    for (int i = 0; i < this.studentNamesAndMarks.length; i++) {
-      ret.add(StudentMinorInfo(this.studentNamesAndMarks[i], i + 1));
+    for (int i = 0; i < this.widget.studentNames.length; i++) {
+      ret.add(StudentMinorInfo(
+        this.widget.studentNames[i],
+        this.widget.studentMarks[i],
+        this.widget.correct[i],
+        this.widget.wrong[i],
+        this.widget.na[i],
+        this.widget.date[i],
+        i + 1,
+      ));
     }
     return ret;
+  }
+
+  Widget displayContent() {
+    if (this.widget.studentNames.isNotEmpty) {
+      return ListView(children: _buildCards());
+    } else {
+      return Loader();
+    }
   }
 
   @override
@@ -37,24 +99,36 @@ class MinorInfo extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.fromLTRB(30, 20, 30, 10),
         // child: FirstPage(),
-        child: ListView(
-          children: _buildCards(),
-        ),
+        child: displayContent(),
       ),
     );
   }
 }
 
 class StudentMinorInfo extends StatelessWidget {
-  final Map studentDetails;
+  final studentName;
+  final studentMark;
+  final correct;
+  final wrong;
+  final na;
+  final date;
   final int rank;
 
-  StudentMinorInfo(this.studentDetails, this.rank);
+  StudentMinorInfo(this.studentName, this.studentMark, this.correct, this.wrong,
+      this.na, this.date, this.rank);
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      onPressed: () => Navigator.of(context).pushNamed('/major'),
+      onPressed: () => Navigator.of(context).pushNamed('/major', arguments: {
+        "name": studentName,
+        "mark": studentMark,
+        "correct": correct,
+        "wrong": wrong,
+        "na": na,
+        "date": date,
+        "rank": rank,
+      }),
       child: Container(
         child: Card(
           elevation: 8,
@@ -67,7 +141,7 @@ class StudentMinorInfo extends StatelessWidget {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Text(
-                    this.studentDetails["name"],
+                    this.studentName,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -86,7 +160,7 @@ class StudentMinorInfo extends StatelessWidget {
                 ),
                 Divider(color: Colors.black, height: 20),
                 Text(
-                  "Mark : " + this.studentDetails["mark"],
+                  "Mark : " + this.studentMark.toString(),
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,

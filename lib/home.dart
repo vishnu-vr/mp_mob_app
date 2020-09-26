@@ -1,4 +1,7 @@
+import 'dart:convert';
+import 'package:mathspartner/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:mathspartner/api.dart' as api;
 
 class Home extends StatelessWidget {
   @override
@@ -24,30 +27,47 @@ class Home extends StatelessWidget {
   }
 }
 
-class QuizList extends StatelessWidget {
-  final List<String> testList = [
-    "quiz-1",
-    "quiz-2",
-    "quiz-3",
-    "quiz-4",
-    "quiz-5",
-    "quiz-6",
-    "quiz-4",
-    "quiz-5",
-    "quiz-6",
-    "quiz-4",
-    "quiz-5",
-    "quiz-6",
-    "quiz-4",
-    "quiz-5",
-    "quiz-6",
-  ];
+class QuizList extends StatefulWidget {
+  @override
+  _QuizListState createState() => _QuizListState();
+}
+
+class _QuizListState extends State<QuizList> {
+  @override
+  void initState() {
+    super.initState();
+    getQuizNames();
+  }
+
+  void getQuizNames() async {
+    var res = await api.getQuizNames();
+    List quizList = jsonDecode(res.body);
+    // List<String> quiz;
+    List<String> quizNames = [];
+    for (int i = 0; i < quizList.length; i++) {
+      quizNames.add(quizList[i]["quiz_name"]);
+    }
+    print(quizNames);
+    setState(() {
+      this.testList = quizNames;
+    });
+  }
+
+  List<String> testList = [];
+
+  Widget displayContent() {
+    if (this.testList.isNotEmpty) {
+      return ListView(
+        children: this.testList.map((e) => QuizCard(e)).toList(),
+      );
+    } else {
+      return Loader();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: this.testList.map((e) => QuizCard(e)).toList(),
-    );
+    return displayContent();
   }
 }
 
@@ -60,7 +80,8 @@ class QuizCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       focusColor: Colors.white,
-      onPressed: () => Navigator.of(context).pushNamed('/minor'),
+      onPressed: () =>
+          Navigator.of(context).pushNamed('/minor', arguments: this.quizName),
       child: Card(
         elevation: 20,
         color: Colors.orange[300],

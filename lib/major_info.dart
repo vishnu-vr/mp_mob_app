@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class MajorInfo extends StatelessWidget {
-  final Map info = {
+  MajorInfo(this.info);
+
+  Map info = {
     "name": "vishnu ramesh",
     "mark": "90",
     "correct": "10",
@@ -41,6 +44,7 @@ class DisplayInfo extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
         child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.st,
           children: [
             Text(
               "Name",
@@ -59,7 +63,29 @@ class DisplayInfo extends StatelessWidget {
               color: Colors.grey[600],
               height: 40,
             ),
+            SizedBox(height: 30),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "Rank : ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+                Text(
+                  this.info["rank"].toString(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
                   "Mark : ",
@@ -69,7 +95,7 @@ class DisplayInfo extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  this.info["mark"],
+                  this.info["mark"].toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
@@ -77,8 +103,9 @@ class DisplayInfo extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 20),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
                   "Correct : ",
@@ -88,7 +115,7 @@ class DisplayInfo extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  this.info["correct"],
+                  this.info["correct"].toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
@@ -96,8 +123,9 @@ class DisplayInfo extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 20),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
                   "Wrong : ",
@@ -107,7 +135,7 @@ class DisplayInfo extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  this.info["wrong"],
+                  this.info["wrong"].toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
@@ -115,8 +143,9 @@ class DisplayInfo extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 20),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
                   "NA : ",
@@ -126,7 +155,29 @@ class DisplayInfo extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  this.info["na"],
+                  this.info["na"].toString(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            Divider(height: 30),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "Date : ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+                Text(
+                  this.info["date"].toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
