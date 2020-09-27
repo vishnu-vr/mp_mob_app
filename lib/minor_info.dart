@@ -29,6 +29,7 @@ class _MinorInfoState extends State<MinorInfo> {
   }
 
   void getQuizData() async {
+    print("getting new data");
     var res = await api.getQuizData(this.widget.quizName);
     List studentList = jsonDecode(res.body);
 
@@ -74,6 +75,7 @@ class _MinorInfoState extends State<MinorInfo> {
         this.widget.date[i],
         this.widget.id[i],
         i + 1,
+        this.getQuizData,
       ));
     }
     return ret;
@@ -85,6 +87,12 @@ class _MinorInfoState extends State<MinorInfo> {
     } else {
       return Loader();
     }
+  }
+
+  Future<Null> pageRefresh() async {
+    await Future.delayed(Duration(seconds: 2));
+    print("being refreshed");
+    getQuizData();
   }
 
   @override
@@ -104,7 +112,10 @@ class _MinorInfoState extends State<MinorInfo> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(30, 20, 30, 10),
         // child: FirstPage(),
-        child: displayContent(),
+        child: RefreshIndicator(
+          child: displayContent(),
+          onRefresh: pageRefresh,
+        ),
       ),
     );
   }
@@ -119,9 +130,19 @@ class StudentMinorInfo extends StatelessWidget {
   final date;
   final id;
   final int rank;
+  final Function getQuizData;
 
-  StudentMinorInfo(this.studentName, this.studentMark, this.correct, this.wrong,
-      this.na, this.date, this.id, this.rank);
+  StudentMinorInfo(
+    this.studentName,
+    this.studentMark,
+    this.correct,
+    this.wrong,
+    this.na,
+    this.date,
+    this.id,
+    this.rank,
+    this.getQuizData,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +156,7 @@ class StudentMinorInfo extends StatelessWidget {
         "date": date,
         "rank": rank,
         "id": id,
+        "getQuizData": getQuizData,
       }),
       child: Container(
         child: Card(

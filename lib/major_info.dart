@@ -5,13 +5,7 @@ import 'package:mathspartner/api.dart' as api;
 class MajorInfo extends StatelessWidget {
   MajorInfo(this.info);
 
-  Map info = {
-    "name": "vishnu ramesh",
-    "mark": "90",
-    "correct": "10",
-    "wrong": "20",
-    "na": "70",
-  };
+  Map info;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +30,20 @@ class MajorInfo extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class DisplayInfo extends StatelessWidget {
   final Map info;
+  Function getQuizData;
+
   DisplayInfo(this.info);
+
+  void deleteAndPop(BuildContext context) {
+    api.delete(this.info["id"].toString());
+    getQuizData = this.info["getQuizData"];
+    Navigator.pop(context);
+    getQuizData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -192,7 +197,7 @@ class DisplayInfo extends StatelessWidget {
             RaisedButton(
               elevation: 5,
               color: Colors.red,
-              onPressed: () => {api.delete(this.info["id"].toString())},
+              onPressed: () => {deleteAndPop(context)},
               child: Icon(Icons.delete),
             )
           ],

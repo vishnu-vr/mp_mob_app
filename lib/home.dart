@@ -55,6 +55,12 @@ class _QuizListState extends State<QuizList> {
 
   List<String> testList = [];
 
+  Future<Null> pageRefresh() async {
+    await Future.delayed(Duration(seconds: 2));
+    print("being refreshed");
+    getQuizNames();
+  }
+
   Widget displayContent() {
     if (this.testList.isNotEmpty) {
       return ListView(
@@ -67,7 +73,10 @@ class _QuizListState extends State<QuizList> {
 
   @override
   Widget build(BuildContext context) {
-    return displayContent();
+    return RefreshIndicator(
+      child: displayContent(),
+      onRefresh: pageRefresh,
+    );
   }
 }
 
