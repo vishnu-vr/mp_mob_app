@@ -33,6 +33,11 @@ class _MinorInfoState extends State<MinorInfo> {
     var res = await api.getQuizData(this.widget.quizName);
     List studentList = jsonDecode(res.body);
 
+    if (studentList.isEmpty) {
+      print("empty");
+      Navigator.pop(context);
+    }
+
     var studentNames = [];
     var studentMarks = [];
     var correct = [];
