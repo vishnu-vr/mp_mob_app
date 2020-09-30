@@ -41,6 +41,11 @@ class DisplayInfo extends StatelessWidget {
     api.delete(this.info["id"].toString());
     getQuizData = this.info["getQuizData"];
     Navigator.pop(context);
+    waitForASecondsAndReload();
+  }
+
+  void waitForASecondsAndReload() async {
+    await Future.delayed(Duration(seconds: 1));
     getQuizData();
   }
 
