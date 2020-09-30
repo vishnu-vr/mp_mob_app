@@ -64,7 +64,8 @@ class _QuizListState extends State<QuizList> {
   Widget displayContent() {
     if (this.testList.isNotEmpty) {
       return ListView(
-        children: this.testList.map((e) => QuizCard(e)).toList(),
+        children:
+            this.testList.map((e) => QuizCard(e, this.getQuizNames)).toList(),
       );
     } else {
       return Loader();
@@ -82,15 +83,16 @@ class _QuizListState extends State<QuizList> {
 
 class QuizCard extends StatelessWidget {
   final String quizName;
+  final Function getQuizNames;
 
-  QuizCard(this.quizName);
+  QuizCard(this.quizName, this.getQuizNames);
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
       focusColor: Colors.white,
-      onPressed: () =>
-          Navigator.of(context).pushNamed('/minor', arguments: this.quizName),
+      onPressed: () => Navigator.of(context)
+          .pushNamed('/minor', arguments: [this.quizName, this.getQuizNames]),
       child: Card(
         elevation: 20,
         color: Colors.orange[300],

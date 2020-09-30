@@ -5,9 +5,13 @@ import 'package:mathspartner/api.dart' as api;
 
 // ignore: must_be_immutable
 class MinorInfo extends StatefulWidget {
-  final String quizName;
+  String quizName;
+  Function getQuizNames;
 
-  MinorInfo(this.quizName);
+  MinorInfo(List args) {
+    this.quizName = args[0];
+    this.getQuizNames = args[1];
+  }
 
   var studentNames = [];
   var studentMarks = [];
@@ -36,6 +40,7 @@ class _MinorInfoState extends State<MinorInfo> {
     if (studentList.isEmpty) {
       print("empty");
       Navigator.pop(context);
+      waitForASecondsAndReload();
     }
 
     var studentNames = [];
@@ -66,6 +71,11 @@ class _MinorInfoState extends State<MinorInfo> {
       this.widget.date = date;
       this.widget.id = id;
     });
+  }
+
+  void waitForASecondsAndReload() async {
+    await Future.delayed(Duration(seconds: 1));
+    this.widget.getQuizNames();
   }
 
   List<Widget> _buildCards() {
